@@ -1,0 +1,202 @@
+===== ROOT FILES =====
+.env.local
+.gitignore
+.next
+db
+debug.txt
+next-env.d.ts
+next.config.mjs
+node_modules
+package-lock.json
+package.json
+postcss.config.js
+README.md
+src
+tailwind.config.ts
+tsconfig.json
+vercel.json
+
+===== SRC TREE =====
+Folder PATH listing for volume Acer
+Volume serial number is 8C77-2786
+C:\USERS\PC\DESKTOP\BORROWDESK-FINAL\BORROWDESK\SRC
++---app
+|   |   globals.css
+|   |   layout.tsx
+|   |   
+|   +---(app)
+|   |   |   layout.tsx
+|   |   |   loading.tsx
+|   |   |   page.tsx
+|   |   |   
+|   |   +---catalog
+|   |   |       page.tsx
+|   |   |       
+|   |   +---notifications
+|   |   |       page.tsx
+|   |   |       
+|   |   \---staff
+|   |       |   page.tsx
+|   |       |   
+|   |       +---items
+|   |       |   |   page.tsx
+|   |       |   |   
+|   |       |   \---[id]
+|   |       |           page.tsx
+|   |       |           
+|   |       +---loans
+|   |       |       page.tsx
+|   |       |       
+|   |       +---pickups
+|   |       |       page.tsx
+|   |       |       
+|   |       +---requests
+|   |       |       page.tsx
+|   |       |       
+|   |       \---users
+|   |               page.tsx
+|   |               
+|   +---api
+|   |   \---cron
+|   |       \---reminders
+|   |               route.ts
+|   |               
+|   \---login
+|           page.tsx
+|           
++---components
+|       AdminShell.tsx
+|       Icon.tsx
+|       LoanSlip.tsx
+|       Modal.tsx
+|       ModalButton.tsx
+|       NavLink.tsx
+|       Notice.tsx
+|       RuleFields.tsx
+|       Sidebar.tsx
+|       StatusPill.tsx
+|       ThemeSwitcher.tsx
+|       Tooltip.tsx
+|       useDismiss.ts
+|       
+\---lib
+        actions.ts
+        config.ts
+        db.ts
+        duration.ts
+        format.ts
+        inventory-actions.ts
+        limits.ts
+        maintenance.ts
+        money.ts
+        notify.ts
+        queries.ts
+        queue.ts
+        reminders.ts
+        schedule.ts
+        session.ts
+        templates.ts
+        types.ts
+        user-actions.ts
+        
+
+===== package.json =====
+{
+  "name": "borrowdesk",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
+    "bcryptjs": "^2.4.3",
+    "jose": "^5.9.6",
+    "next": "14.2.35",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.16.0",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "typescript": "^5.6.3"
+  }
+}
+
+===== next.config =====
+
+next.config.mjs
+
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
+export default nextConfig;
+
+===== tsconfig.json =====
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [{ "name": "next" }],
+    "paths": { "@/*": ["./src/*"] }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+
+===== middleware =====
+The system cannot find the file specified.
+The system cannot find the file specified.
+
+===== instrumentation =====
+The system cannot find the file specified.
+The system cannot find the file specified.
+
+===== layout.tsx =====
+import type { Metadata } from "next";
+import { Bricolage_Grotesque, DM_Sans } from "next/font/google";
+import "./globals.css";
+
+const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display" });
+const body = DM_Sans({ subsets: ["latin"], variable: "--font-body" });
+
+export const metadata: Metadata = {
+  title: "BorrowDesk",
+  description: "Borrow books and equipment from your school, with a message at every step.",
+};
+
+// Runs before first paint so the saved theme never flashes.
+const themeScript = `(function(){try{var m=localStorage.getItem("bd_mode")||"system";var a=localStorage.getItem("bd_accent")||"green";var d=m==="dark"||(m==="system"&&matchMedia("(prefers-color-scheme: dark)").matches);var r=document.documentElement;r.dataset.theme=d?"dark":"light";r.dataset.accent=a;r.style.colorScheme=d?"dark":"light"}catch(e){}})()`;
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body className="min-h-screen">{children}</body>
+    </html>
+  );
+}
+
+===== page.tsx =====
+The system cannot find the file specified.

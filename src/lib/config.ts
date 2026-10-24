@@ -1,0 +1,11 @@
+export const MAX_ACTIVE = 3;        // items one student can hold, request or wait for at once
+export const DESK_CLOSE_HOUR = 16;  // reservations must be picked up by 4 PM (Manila time)
+export const NO_SHOW_LIMIT = 3;     // missed pickups allowed...
+export const NO_SHOW_DAYS = 30;     // ...within this many days before borrowing is paused
+export const STALE_REQUEST_HOURS = 48; // requests staff never review are closed after this long
+export const GRACE_MINUTES = 60;    // returning this soon after the due time is not counted as late
+export const MAX_EXTENSIONS = 1;    // self-service extensions per loan
+export const LATE_LIMIT = 3;        // late returns allowed...
+export const LATE_DAYS = 60;        // ...within this many days before borrowing is paused
+export const LATE_PAUSE_DAYS = 7;   // length of that pause
+export const LOST_REVIEW_DAYS = 7;  // staff see a "consider marking lost" hint after this many days late

@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Theme tokens (space-separated RGB so Tailwind opacity works) ---------- */
+:root {
+  --paper: 245 245 247;   --surface: 255 255 255;  --ink: 29 29 31;      --line: 221 221 226;
+  --stamp: 150 98 0;      --stamp-bg: 255 244 214; --alert: 200 40 35;    --alert-bg: 253 236 234;
+  --rule: 221 231 238;
+  /* default accent: green */
+  --accent: 20 90 71;     --accent-dark: 13 63 50; --accent-ink: 20 90 71; --mint: 227 240 234;
+}
+[data-accent="blue"]     { --accent: 0 102 204;  --accent-dark: 0 72 150;  --accent-ink: 0 102 204;  --mint: 230 240 252; }
+[data-accent="violet"]   { --accent: 108 76 200; --accent-dark: 70 46 140; --accent-ink: 108 76 200; --mint: 238 234 251; }
+[data-accent="rose"]     { --accent: 201 48 92;  --accent-dark: 140 28 62; --accent-ink: 201 48 92;  --mint: 252 232 238; }
+[data-accent="orange"]   { --accent: 196 85 10;  --accent-dark: 134 56 4;  --accent-ink: 196 85 10;  --mint: 253 238 224; }
+[data-accent="graphite"] { --accent: 60 60 67;   --accent-dark: 29 29 31;  --accent-ink: 60 60 67;   --mint: 236 236 240; }
+
+[data-theme="dark"] {
+  --paper: 18 18 20;  --surface: 30 30 33; --ink: 245 245 247; --line: 58 58 62;
+  --stamp: 240 185 59; --stamp-bg: 62 46 12; --alert: 229 72 77; --alert-bg: 66 24 24;
+  --rule: 52 60 68;
+  --accent: 42 128 104; --accent-dark: 16 61 49; --accent-ink: 111 209 177; --mint: 24 50 43;
+  color-scheme: dark; /* NEW: dark dropdowns, date pickers and scrollbars */
+}
+[data-theme="dark"][data-accent="blue"]     { --accent: 0 113 227;   --accent-dark: 0 56 120;  --accent-ink: 102 178 255; --mint: 14 38 66; }
+[data-theme="dark"][data-accent="violet"]   { --accent: 124 92 214;  --accent-dark: 52 36 104; --accent-ink: 190 170 255; --mint: 38 30 64; }
+[data-theme="dark"][data-accent="rose"]     { --accent: 214 64 108;  --accent-dark: 96 24 50;  --accent-ink: 255 150 180; --mint: 66 26 38; }
+[data-theme="dark"][data-accent="orange"]   { --accent: 198 88 14;   --accent-dark: 100 44 6;  --accent-ink: 255 176 110; --mint: 66 38 16; }
+[data-theme="dark"][data-accent="graphite"] { --accent: 99 99 106;   --accent-dark: 44 44 48;  --accent-ink: 200 200 208; --mint: 46 46 50; }
+
+@layer base {
+  html { @apply bg-paper font-body text-ink antialiased; -webkit-tap-highlight-color: transparent; }
+  body { transition: background-color 200ms ease, color 200ms ease; }
+  h1, h2, h3 { @apply font-display tracking-tight; }
+  :focus-visible { @apply outline outline-2 outline-offset-2 outline-forest; }
+  ::selection { background: rgb(var(--accent) / 0.25); }
+}
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center rounded-md bg-forest px-4 py-2 text-sm font-medium text-white transition hover:bg-forest-dark active:scale-[0.98] disabled:opacity-50; }
+  .btn-quiet { @apply inline-flex items-center justify-center rounded-md border border-line bg-surface px-3 py-2 text-sm font-medium text-ink transition hover:bg-mint active:scale-[0.98]; }
+  .btn-danger { @apply inline-flex items-center justify-center rounded-md border border-alert/30 bg-surface px-3 py-2 text-sm font-medium text-alert transition hover:bg-alert-bg active:scale-[0.98]; }
+  .btn-icon { @apply inline-flex h-9 w-9 items-center justify-center rounded-full text-ink/70 transition-colors hover:bg-ink/5 hover:text-ink; }
+  .field { @apply w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm placeholder:text-ink/40; }
+  .label { @apply mb-1 block text-sm font-medium; }
+  .panel { @apply rounded-xl border border-line bg-surface shadow-[0_1px_2px_rgb(0_0_0/0.04)]; }
+  /* Library index card: red header rule and faint ruled lines */
+  .slip { @apply rounded-xl border border-line bg-surface shadow-[0_1px_2px_rgb(0_0_0/0.04)]; }
+  .slip-head { border-bottom: 2px solid rgb(var(--alert) / 0.35); }
+  .ruled { background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 27px, rgb(var(--rule)) 27px, rgb(var(--rule)) 28px); background-origin: content-box; background-clip: content-box; line-height: 28px; }
+
+  /* NEW: phones. 16px fields stop iOS zooming in on focus. */
+  @media (max-width: 639px) {
+    .field { font-size: 16px; }
+  }
+  /* NEW: touch screens get comfortable tap targets, even for the compact buttons. */
+  @media (pointer: coarse) {
+    .btn, .btn-quiet, .btn-danger { min-height: 2.5rem; }
+  }
+}
+
+/* NEW: lock the page behind an open modal */
+body:has(dialog[open]) { overflow: hidden; }
+
+/* NEW: modal animation. Fade on desktop, slide-up bottom sheet on phones. */
+dialog[open] { animation: dialog-in 160ms ease-out; }
+dialog::backdrop { animation: backdrop-in 160ms ease-out; }
+@media (max-width: 639px) {
+  dialog[open] {
+    margin: auto 0 0 0;
+    width: 100%;
+    max-width: 100%;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    padding-bottom: env(safe-area-inset-bottom);
+    animation: sheet-in 220ms cubic-bezier(.2,.9,.3,1);
+  }
+}
+@keyframes dialog-in { from { opacity: 0; transform: translateY(6px) scale(.98); } to { opacity: 1; transform: none; } }
+@keyframes sheet-in { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .stamp-in { animation: stamp 420ms cubic-bezier(.2,1.4,.4,1) both; }
+  @keyframes stamp { from { transform: rotate(-3deg) scale(1.6); opacity: 0; } to { transform: rotate(-3deg) scale(1); opacity: 1; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  dialog[open], dialog::backdrop { animation: none; }
+}
